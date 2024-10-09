@@ -58,3 +58,10 @@ body {
   > td {
   background: rgb(0, 0, 0, 0.1);
 }
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-input-group
+  > .ant-input:first-child,
+:where(.css-dev-only-do-not-override-ccdg5a).ant-input-group
+  .ant-input-group-addon:first-child {
+  width: 100%;
+}

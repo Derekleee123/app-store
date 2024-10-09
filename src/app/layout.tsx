@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { version as versionNumber } from "../../package.json";
 
 export const metadata: Metadata = {
   title: "App store",
@@ -13,7 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <div id="app-version" className="hidden">
+          {versionNumber}
+        </div>
+      </body>
     </html>
   );
 }
