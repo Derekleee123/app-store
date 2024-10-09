@@ -74,7 +74,7 @@ function AppListTable() {
             borderColor: "#fff",
             borderWidth: "1px",
           }}
-          className={`${isChangePage ? "fade-out" : "fade-in"} w-full rounded-[10px] p-[10px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)]`}
+          className={`${isChangePage ? "opacity-50" : "opacity-100"} w-full rounded-[10px] p-[10px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] transition-all duration-300`}
           columns={columns.map((col) => ({
             ...col,
             title: (

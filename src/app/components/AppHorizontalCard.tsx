@@ -1,5 +1,4 @@
 "use client";
-import { Tooltip } from "antd";
 
 export default function AppHorizontalCard({
   title,
