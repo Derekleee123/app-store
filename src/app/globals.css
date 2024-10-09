@@ -16,7 +16,13 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: radial-gradient(
+    circle at center,
+    #fdb770,
+    #ff7d0082,
+    #cccccc99,
+    rgb(206 206 206)
+  );
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,4 +30,31 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.ant-table.css-dev-only-do-not-override-ccdg5a {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ant-table-container .ant-table-content .ant-table-thead .ant-table-cell {
+  background: rgba(0, 0, 0);
+}
+
+.ant-table-thead
+  > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(
+    .ant-table-row-selected
+  )
+  > td,
+.ant-table-tbody
+  > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(
+    .ant-table-row-selected
+  )
+  > td,
+.ant-table-thead
+  > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
+  > td,
+.ant-table-tbody
+  > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)
+  > td {
+  background: rgb(0, 0, 0, 0.1);
 }
