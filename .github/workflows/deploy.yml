@@ -53,7 +53,6 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
 
-          # 从覆盖率徽章生成的文件中读取徽章并更新 README
           if [ -f coverage/badge.svg ]; then
             COVERAGE_BADGE=$(cat coverage/badge.svg | base64)
             echo "![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)" > coverage-badge.svg

@@ -69,3 +69,7 @@ body {
 :where(.css-dev-only-do-not-override-vryruh).ant-table-wrapper .ant-table {
   background: rgba(255, 255, 255, 0.2);
 }
+
+:where(.css-vryruh).ant-table-wrapper .ant-table {
+  background: transparent;
+}
