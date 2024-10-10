@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push app-store
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/app-store
 
       - name: Update README with version and coverage
         run: |
