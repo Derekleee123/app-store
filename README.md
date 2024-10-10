@@ -12,9 +12,8 @@ Test Coverage: <!--coverage--> <!-- 這裡可以用 GitHub Actions 自動更新 
 
 ## Getting Started
 
-clone下來後，先進入根目錄npm do_ci
-安裝完後，在npm run dev
-最後再打開瀏覽器：localhost:3000即可查看
+Clone the repository and navigate into the root directory. Run `npm ci` to install dependencies.  
+Then, run `npm run dev`, and open your browser at `localhost:3000` to view the application.
 
-部署好的網址：
-https://app-store-cbb6b545fbd5.herokuapp.com/
+Deployed URL:  
+[https://app-store-cbb6b545fbd5.herokuapp.com/](https://app-store-cbb6b545fbd5.herokuapp.com/)
