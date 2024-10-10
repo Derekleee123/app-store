@@ -48,15 +48,15 @@ jobs:
       - name: Push Docker image
         run: docker push derek11428/app-store:latest
 
-      - name: Update README with version and coverage badge
+      - name: Update README with version and coverage percentage
         run: |
           VERSION=$(node -p "require('./package.json').version")
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
 
+          # 提取百分比數據
           if [ -f coverage/badge-statements.svg ]; then
-            COVERAGE_BADGE=$(cat coverage/badge-statements.svg | base64)
-            echo "![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)" > coverage-badge.svg
-            sed -i "s|<!--coverage-->|![Coverage](coverage-badge.svg)|g" README.md
+            COVERAGE_PERCENTAGE=$(grep -oP 'Coverage:statements: \K[0-9.]+%' coverage/badge-statements.svg)
+            sed -i "s|<!--coverage-->|Test Coverage: $COVERAGE_PERCENTAGE|g" README.md
           else
             echo "Coverage badge not found!"  # 输出调试信息
           fi
@@ -65,8 +65,8 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions"
-          git add README.md coverage-badge.svg
-          git commit -m "Update README with version and coverage badge" || echo "No changes to commit"
+          git add README.md
+          git commit -m "Update README with version and coverage percentage" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
