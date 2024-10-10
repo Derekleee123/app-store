@@ -10,7 +10,8 @@
     "do_ci": "npm install --frozen-lockfile",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "coverage-badge": "npx jest-coverage-badges --config ./jest-coverage-badges.config.js"
+    "coverage": "npx jest --coverage --coverageReporters=\"json-summary\" --coverageDirectory=\"./coverage/\"",
+    "coverage-badge": "npm run coverage && npx jest-coverage-badges --config ./jest-coverage-badges.config.js"
   },
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
