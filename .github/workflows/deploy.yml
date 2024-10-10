@@ -25,9 +25,7 @@ jobs:
         run: npm run test -- --coverage --watchAll=false
 
       - name: Generate coverage badge
-        uses: tj-actions/coverage-badge@v2
-        with:
-          test-coverage-json-path: coverage/coverage-summary.json
+        run: npm run coverage-badge
 
       - name: Build the project
         run: npm run build
@@ -47,19 +45,20 @@ jobs:
       - name: Push Docker image
         run: docker push derek11428/app-store:latest
 
-      - name: Update README with version and coverage
+      - name: Update README with version and coverage badge
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          COVERAGE_BADGE=$(cat coverage/badge.svg | base64)
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
-          sed -i "s|<!--coverage-->|![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)|g" README.md
+          COVERAGE_BADGE=$(cat badge.svg | base64)
+          echo "![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)" > coverage-badge.svg
+          sed -i "s|<!--coverage-->|![Coverage](coverage-badge.svg)|g" README.md
 
       - name: Commit and push changes to README
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions"
-          git add README.md
-          git commit -m "Update README with version and coverage"
+          git add README.md coverage-badge.svg
+          git commit -m "Update README with version and coverage badge"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
