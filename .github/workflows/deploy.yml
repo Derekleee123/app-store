@@ -21,6 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run tests with coverage
+        run: npm run test -- --coverage --watchAll=false
+
+      - name: Generate coverage badge
+        uses: tj-actions/coverage-badge@v2
+        with:
+          test-coverage-json-path: coverage/coverage-summary.json
+
       - name: Build the project
         run: npm run build
 
@@ -41,8 +49,10 @@ jobs:
 
       - name: Update README with version and coverage
         run: |
-          echo "Version: $(node -p "require('./package.json').version")" >> README.md
-          echo "Coverage: $(npm run test -- --coverage --watchAll=false --reporters=lcov)" >> README.md
+          VERSION=$(node -p "require('./package.json').version")
+          COVERAGE_BADGE=$(cat coverage/badge.svg | base64)
+          sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
+          sed -i "s|<!--coverage-->|![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)|g" README.md
 
       - name: Commit and push changes to README
         run: |
