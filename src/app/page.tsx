@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Skeleton } from "antd";
 import AppHorizontalCard from "./components/AppHorizontalCard";
 import AppListTable from "./components/AppListTable";
@@ -65,9 +65,9 @@ export default function Home() {
 
     if (value) {
       const filteredApps = originalAppList.filter((app: App) => {
-        const name = app["im:name"].label.toLowerCase();
-        const summary = app.summary.label.toLowerCase();
-        const title = app.title.label.toLowerCase();
+        const name = app["im:name"]?.label.toLowerCase();
+        const summary = app?.summary?.label.toLowerCase();
+        const title = app?.title?.label.toLowerCase();
 
         return (
           name.includes(value.toLowerCase()) ||
@@ -161,14 +161,15 @@ export default function Home() {
             </div>
           ) : (
             <div className="mt-[20px] flex w-full items-center gap-2 overflow-x-scroll rounded-[10px] border-[1.5px] border-[#ffffff] p-[10px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] sm:gap-2 md:gap-3">
-              {hotApps.map((app: App) => (
-                <AppHorizontalCard
-                  key={app["im:name"].label}
-                  title={app["im:name"].label}
-                  description={app["category"].attributes.label}
-                  image={app["im:image"][2].label}
-                />
-              ))}
+              {hotApps.length &&
+                hotApps.map((app: App) => (
+                  <AppHorizontalCard
+                    key={app["im:name"]?.label}
+                    title={app["im:name"]?.label}
+                    description={app["category"]?.attributes?.label}
+                    image={app["im:image"][2]?.label}
+                  />
+                ))}
             </div>
           )}
         </div>

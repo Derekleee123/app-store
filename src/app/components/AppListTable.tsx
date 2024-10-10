@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { useAppStore } from "../store/useAppStore";
 import { Skeleton, Table } from "antd";
@@ -45,6 +46,8 @@ function AppListTable() {
 
   useEffect(() => {
     if (isChangePage) {
+      console.log(window.innerWidth);
+
       if (window.innerWidth > 1024) {
         window.scrollTo({ top: 400, behavior: "smooth" });
       } else if (window.innerWidth > 768) {
