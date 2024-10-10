@@ -15,3 +15,7 @@ Test Coverage: **60%** <!-- 這裡可以用 GitHub Actions 自動更新 -->
 clone下來後，先進入根目錄npm do_ci
 安裝完後，在npm run dev
 最後再打開瀏覽器：localhost:3000即可查看
+Version: 0.0.1
+Coverage: 
+> app-store@0.0.1 test
+> jest --coverage --watchAll=false --reporters=lcov
