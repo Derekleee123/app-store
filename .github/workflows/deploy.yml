@@ -24,8 +24,11 @@ jobs:
       - name: Run tests with coverage
         run: npm run test -- --coverage --watchAll=false
 
+      - name: Show coverage directory
+        run: ls -R coverage # 显示覆盖率目录，以确认文件是否存在
+
       - name: Generate coverage badge
-        run: npm run coverage-badge
+        run: npm run coverage-badge # 确保生成覆盖率徽章
 
       - name: Build the project
         run: npm run build
@@ -49,16 +52,22 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
-          COVERAGE_BADGE=$(cat badge.svg | base64)
-          echo "![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)" > coverage-badge.svg
-          sed -i "s|<!--coverage-->|![Coverage](coverage-badge.svg)|g" README.md
+
+          # 从覆盖率徽章生成的文件中读取徽章并更新 README
+          if [ -f coverage/badge.svg ]; then
+            COVERAGE_BADGE=$(cat coverage/badge.svg | base64)
+            echo "![Coverage](data:image/svg+xml;base64,$COVERAGE_BADGE)" > coverage-badge.svg
+            sed -i "s|<!--coverage-->|![Coverage](coverage-badge.svg)|g" README.md
+          else
+            echo "Coverage badge not found!"  # 输出调试信息
+          fi
 
       - name: Commit and push changes to README
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions"
           git add README.md coverage-badge.svg
-          git commit -m "Update README with version and coverage badge"
+          git commit -m "Update README with version and coverage badge" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
