@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Version
 
-Current Version: <!--version--> <!-- 這裡可以用 GitHub Actions 自動更新 -->
+Current Version: ![Version](https://img.shields.io/badge/version-0.0.1-blue) <!-- 這裡可以用 GitHub Actions 自動更新 -->
 
 ## Test Coverage
 
