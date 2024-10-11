@@ -74,3 +74,15 @@ body {
 :where(.css-dev-only-do-not-override-vryruh).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-vryruh).ant-btn-variant-dashed{
   background: rgba(255, 255, 255, 0.2) !important;
 }
+
+:where(.css-vryruh).ant-input-outlined{
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+:where(.css-vryruh).ant-table-wrapper .ant-table{
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+:where(.css-vryruh).ant-btn-variant-outlined, :where(.css-vryruh).ant-btn-variant-dashed{
+  background: rgba(255, 255, 255, 0.2) !important;
+}
