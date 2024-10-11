@@ -30,6 +30,9 @@ jobs:
       - name: Install libxml2 for xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2
 
+      - name: Install libxml2-utils for xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
       - name: Generate coverage badge
         run: npm run coverage-badge # 确保生成覆盖率徽章
 
