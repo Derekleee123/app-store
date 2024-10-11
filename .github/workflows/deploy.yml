@@ -21,28 +21,7 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests with coverage
-        run: npm run test -- --coverage --watchAll=false
-
-      - name: Show coverage directory
-        run: ls -R coverage # Display coverage directory to ensure files exist
-
-      - name: Install libxml2 for xmllint
-        run: sudo apt-get update && sudo apt-get install -y libxml2
-
-      - name: Install libxml2-utils for xmllint
-        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
-
-      - name: Generate coverage badge
-        run: npm run coverage-badge # Ensure the coverage badge is generated
-
-      - name: Build the project
-        run: npm run build
-
-      - name: Build Docker image
+      - name: Build Docker image with multi-stage build (tests included)
         run: docker build -t derek11428/app-store:latest .
 
       - name: List Docker images

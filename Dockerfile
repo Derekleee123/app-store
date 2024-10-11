@@ -1,23 +1,37 @@
-# 使用 Node.js 的官方映像
-FROM node:18
+# Stage 1: Build the project using a lightweight Node.js image
+FROM node:20-alpine AS builder
 
-# 設定工作目錄
+# Set working directory
 WORKDIR /app
 
-# 複製 package.json 和 package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# 安裝依賴
-RUN npm install
+# Install dependencies using npm run do_ci to ensure consistency and remove unnecessary packages
+RUN npm run do_ci
 
-# 複製專案檔案
+# Copy the rest of the project files
 COPY . .
 
-# 建立專案
+# Run tests in the builder stage to ensure code correctness and generate coverage
+RUN npm run test -- --coverage --watchAll=false
+
+# Build the Next.js project in standalone mode to optimize production files
 RUN npm run build
 
-# 指定要運行的端口
+# Stage 2: Create the runtime image using an even smaller Node.js image
+FROM node:20-alpine AS runner
+
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files from the builder stage
+COPY --from=builder --chown=node:node /app/.next/standalone ./
+COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+COPY --from=builder /app/package.json ./
+
+# Expose port
 EXPOSE 3000
 
-# 定義啟動命令
-CMD ["npm", "start"]
+# Start the Next.js application
+CMD ["node", "server.js"]
