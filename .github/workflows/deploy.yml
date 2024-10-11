@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
       - name: Install dependencies
         run: npm install
 
@@ -85,8 +88,9 @@ jobs:
         # Calculate test coverage from coverage-summary.json
         run: |
           if [ -f coverage/coverage-summary.json ]; then
-          coverage_percent=$(jq '.total.statements.pct' coverage/coverage-summary.json)
-          echo "Coverage percentage: $coverage_percent%"
+            coverage_percent=$(jq '.total.statements.pct' coverage/coverage-summary.json)
+            echo "Coverage percentage: $coverage_percent%"
+          fi
 
       - name: Commit and push changes to README and package.json
         run: |
