@@ -1,6 +1,6 @@
 # App Store
 
-![Version](https://img.shields.io/badge/version-0.0.8-blue) <!-- 這裡可以用 GitHub Actions 自動更新 -->
+![Version](https://img.shields.io/badge/version-0.0.9-blue) <!-- 這裡可以用 GitHub Actions 自動更新 -->
 ![Coverage](https://img.shields.io/badge/Coverage-68.51%25-brightgreen) <!-- 這裡可以用 GitHub Actions 自動更新 -->
 
 ## Getting Started
