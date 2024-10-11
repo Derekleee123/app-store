@@ -68,10 +68,10 @@ jobs:
 
             if [[ "$OSTYPE" == "darwin"* ]]; then
               # macOS 系統
-              sed -i '' "s|!\[Coverage\].*|$BADGE|" README.md
+              sed -i "s|<!--coverage-->|$BADGE|g" README.md
             else
               # 其他 Linux 系統
-              sed -i "s|!\[Coverage\].*|$BADGE|" README.md
+              sed -i "s|<!--coverage-->|$BADGE|g" README.md
             fi
 
             echo "Coverage rate updated to $coverage_percent%"
