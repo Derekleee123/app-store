@@ -5,7 +5,7 @@
 
 ## Getting Started
 
-Clone the repository and navigate into the root directory. Run `npm ci` to install dependencies.  
+Clone the repository and navigate into the root directory. Run `npm run do_ci` to install dependencies.  
 Then, run `npm run dev`, and open your browser at `localhost:3000` to view the application.
 
 Deployed URL:  

@@ -26,7 +26,7 @@ jobs:
 
       - name: Show coverage directory
         run: ls -R coverage # Display coverage directory to ensure files exist
-      
+
       - name: Install libxml2 for xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2
 
@@ -61,22 +61,22 @@ jobs:
           echo "Updating version in README to $VERSION"
           sed -i "s|!\[Version\](https://img.shields.io/badge/version-[0-9.]\+-blue)|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
 
-
       - name: Display updated README for debugging
         run: cat README.md
 
       - name: Update README with coverage percentage
         run: |
-          # Calculate test coverage
           if [ -f coverage/clover.xml ]; then
+            # Calculate test coverage
             coveredstatements=$(xmllint --xpath "string(//metrics/@coveredstatements)" coverage/clover.xml)
             statements=$(xmllint --xpath "string(//metrics/@statements)" coverage/clover.xml)
             coverage_percent=$(echo "scale=2; $coveredstatements / $statements * 100" | bc)
-            BADGE="![Coverage](https://img.shields.io/badge/Coverage-$coverage_percent%25-brightgreen)"
+            echo "Coverage percentage: $coverage_percent%"
+            
+            # Update coverage badge in README
+            echo "Updating coverage badge in README to $coverage_percent%"
+            sed -i "s|!\[Coverage\](https://img.shields.io/badge/Coverage-[0-9.]\+%25-brightgreen)|![Coverage](https://img.shields.io/badge/Coverage-$coverage_percent%25-brightgreen)|g" README.md
 
-            sed -i "s|<!--coverage-->|$BADGE|g" README.md
-
-            echo "Coverage rate updated to $coverage_percent%"
           else
             echo "Coverage file not found!"
           fi
@@ -88,5 +88,14 @@ jobs:
           git add package.json README.md
           git commit -m "Bump version to $VERSION and update README with coverage" || echo "No changes to commit"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create and push new tag
+        run: |
+          git fetch --tags
+          VERSION=$(node -p "require('./package.json').version")
+          git tag v$VERSION
+          git push origin v$VERSION
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
