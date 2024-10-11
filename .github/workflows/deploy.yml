@@ -26,6 +26,9 @@ jobs:
 
       - name: Show coverage directory
         run: ls -R coverage # 显示覆盖率目录，以确认文件是否存在
+      
+      - name: Install libxml2 for xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2
 
       - name: Generate coverage badge
         run: npm run coverage-badge # 确保生成覆盖率徽章
