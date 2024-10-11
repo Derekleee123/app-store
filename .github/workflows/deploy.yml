@@ -58,7 +58,11 @@ jobs:
         run: |
           npm version patch --git-tag-version false
           VERSION=$(node -p "require('./package.json').version")
+          echo "Updating version in README to $VERSION"
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
+
+      - name: Display updated README for debugging
+        run: cat README.md
 
       - name: Update README with coverage percentage
         run: |
