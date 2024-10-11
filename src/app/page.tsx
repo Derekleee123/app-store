@@ -121,7 +121,7 @@ export default function Home() {
 
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 2000);
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
