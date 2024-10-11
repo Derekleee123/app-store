@@ -81,6 +81,13 @@ jobs:
             echo "Coverage file not found!"
           fi
 
+      - name: test coverage badge
+        # Calculate test coverage from coverage-summary.json
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+          coverage_percent=$(jq '.total.statements.pct' coverage/coverage-summary.json)
+          echo "Coverage percentage: $coverage_percent%"
+
       - name: Commit and push changes to README and package.json
         run: |
           git config --local user.email "actions@github.com"
