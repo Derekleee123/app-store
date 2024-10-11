@@ -139,10 +139,15 @@ export default function Home() {
           isSticky ? "fixed" : "relative"
         } z-20 flex w-full items-center bg-transparent px-4 transition-all duration-300`}
       >
-        <Input
+        <Input.Search
           className={`${isSticky ? "mt-[10px] bg-[rgba(255,255,255,0.5)]" : "mt-[20px]"} w-full rounded-[10px] bg-[#F7F7F7] p-[10px] px-2 shadow-[0_0_10px_0_rgba(0,0,0,0.1)]`}
           size={inputSize as inputSizeCategories}
           placeholder="Search"
+          loading={isLoading}
+          onSearch={debounce((...args: unknown[]) => {
+            const e = args[0] as React.ChangeEvent<HTMLInputElement>;
+            handleOnSearch(e.target.value);
+          }, 500)}
           onChange={debounce((...args: unknown[]) => {
             const e = args[0] as React.ChangeEvent<HTMLInputElement>;
             handleOnSearch(e.target.value);

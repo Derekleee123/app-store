@@ -59,17 +59,18 @@ body {
   background: rgb(0, 0, 0, 0.1);
 }
 
-:where(.css-dev-only-do-not-override-ccdg5a).ant-input-group
-  > .ant-input:first-child,
-:where(.css-dev-only-do-not-override-ccdg5a).ant-input-group
-  .ant-input-group-addon:first-child {
-  width: 100%;
-}
-
 :where(.css-dev-only-do-not-override-vryruh).ant-table-wrapper .ant-table {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 :where(.css-vryruh).ant-table-wrapper .ant-table {
   background: transparent;
+}
+
+:where(.css-dev-only-do-not-override-vryruh).ant-input-outlined{
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+:where(.css-dev-only-do-not-override-vryruh).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-vryruh).ant-btn-variant-dashed{
+  background: rgba(255, 255, 255, 0.2) !important;
 }

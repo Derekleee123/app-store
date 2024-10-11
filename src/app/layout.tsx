@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { version as versionNumber } from "../../package.json";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 export const metadata: Metadata = {
   title: "App store",
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        <div id="app-version" className="hidden">
-          {versionNumber}
-        </div>
+        <AntdRegistry>
+          {children}
+          <div id="app-version" className="hidden">
+            {versionNumber}
+          </div>
+        </AntdRegistry>
       </body>
     </html>
   );
