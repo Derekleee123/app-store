@@ -48,14 +48,23 @@ jobs:
       - name: List Docker images
         run: docker images
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
 
-      - name: Push Docker image
-        run: docker push derek11428/app-store:latest
+      - name: Tag Docker image for Heroku
+        run: docker tag derek11428/app-store:latest registry.heroku.com/app-store-auto/web
+
+      - name: Push Docker image to Heroku
+        run: docker push registry.heroku.com/app-store-auto/web
+
+      - name: Release the image to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku container:release web --app app-store-auto
 
       - name: Bump version
         run: |
