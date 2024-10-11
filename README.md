@@ -9,4 +9,4 @@ Clone the repository and navigate into the root directory. Run `npm run do_ci` t
 Then, run `npm run dev`, and open your browser at `localhost:3000` to view the application.
 
 Deployed URL:  
-[https://app-store-cbb6b545fbd5.herokuapp.com/](https://app-store-cbb6b545fbd5.herokuapp.com/)
+[https://app-store-auto-e0e40152d7ff.herokuapp.com/](https://app-store-auto-e0e40152d7ff.herokuapp.com/)
