@@ -25,7 +25,7 @@ jobs:
         run: npm run test -- --coverage --watchAll=false
 
       - name: Show coverage directory
-        run: ls -R coverage # 显示覆盖率目录，以确认文件是否存在
+        run: ls -R coverage # Display coverage directory to ensure files exist
       
       - name: Install libxml2 for xmllint
         run: sudo apt-get update && sudo apt-get install -y libxml2
@@ -34,7 +34,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
 
       - name: Generate coverage badge
-        run: npm run coverage-badge # 确保生成覆盖率徽章
+        run: npm run coverage-badge # Ensure the coverage badge is generated
 
       - name: Build the project
         run: npm run build
@@ -54,37 +54,34 @@ jobs:
       - name: Push Docker image
         run: docker push derek11428/app-store:latest
 
-      - name: Update README with version and coverage percentage
+      - name: Bump version
         run: |
+          npm version patch --git-tag-version false
           VERSION=$(node -p "require('./package.json').version")
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
 
-          # 計算測試覆蓋率
+      - name: Update README with coverage percentage
+        run: |
+          # Calculate test coverage
           if [ -f coverage/clover.xml ]; then
             coveredstatements=$(xmllint --xpath "string(//metrics/@coveredstatements)" coverage/clover.xml)
             statements=$(xmllint --xpath "string(//metrics/@statements)" coverage/clover.xml)
             coverage_percent=$(echo "scale=2; $coveredstatements / $statements * 100" | bc)
             BADGE="![Coverage](https://img.shields.io/badge/Coverage-$coverage_percent%25-brightgreen)"
 
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-              # macOS 系統
-              sed -i "s|<!--coverage-->|$BADGE|g" README.md
-            else
-              # 其他 Linux 系統
-              sed -i "s|<!--coverage-->|$BADGE|g" README.md
-            fi
+            sed -i "s|<!--coverage-->|$BADGE|g" README.md
 
             echo "Coverage rate updated to $coverage_percent%"
           else
-            echo "Coverage file not found!"  # 输出调试信息
+            echo "Coverage file not found!"
           fi
 
-      - name: Commit and push changes to README
+      - name: Commit and push changes to README and package.json
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "github-actions"
-          git add README.md
-          git commit -m "Update README with version and coverage percentage" || echo "No changes to commit"
+          git add package.json README.md
+          git commit -m "Bump version to $VERSION and update README with coverage" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
