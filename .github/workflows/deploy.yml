@@ -59,7 +59,8 @@ jobs:
           npm version patch --git-tag-version false
           VERSION=$(node -p "require('./package.json').version")
           echo "Updating version in README to $VERSION"
-          sed -i "s|!\[Version\].*|![Version](https://img.shields.io/badge/version-$VERSION-blue)" README.md
+          sed -i "s|!\[Version\](https://img.shields.io/badge/version-[0-9.]\+-blue)|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
+
 
       - name: Display updated README for debugging
         run: cat README.md
