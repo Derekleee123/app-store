@@ -69,27 +69,17 @@ jobs:
 
       - name: Update README with coverage percentage
         run: |
-          if [ -f coverage/clover.xml ]; then
-            # Calculate test coverage
-            coveredstatements=$(xmllint --xpath "string(//metrics/@coveredstatements)" coverage/clover.xml)
-            statements=$(xmllint --xpath "string(//metrics/@statements)" coverage/clover.xml)
-            coverage_percent=$(echo "scale=2; $coveredstatements / $statements * 100" | bc)
+          if [ -f coverage/coverage-summary.json ]; then
+            # Calculate test coverage from coverage-summary.json
+            coverage_percent=$(jq '.total.statements.pct' coverage/coverage-summary.json)
             echo "Coverage percentage: $coverage_percent%"
-            
+
             # Update coverage badge in README
             echo "Updating coverage badge in README to $coverage_percent%"
             sed -i "s|!\[Coverage\](https://img.shields.io/badge/Coverage-[0-9.]\+%25-brightgreen)|![Coverage](https://img.shields.io/badge/Coverage-$coverage_percent%25-brightgreen)|g" README.md
 
           else
             echo "Coverage file not found!"
-          fi
-
-      - name: test coverage badge
-        # Calculate test coverage from coverage-summary.json
-        run: |
-          if [ -f coverage/coverage-summary.json ]; then
-            coverage_percent=$(jq '.total.statements.pct' coverage/coverage-summary.json)
-            echo "Coverage percentage: $coverage_percent%"
           fi
 
       - name: Commit and push changes to README and package.json
