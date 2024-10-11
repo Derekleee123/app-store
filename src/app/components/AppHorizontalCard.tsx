@@ -18,7 +18,7 @@ export default function AppHorizontalCard({
           src={image}
           alt={title}
         />
-        <div className="mt-2 line-clamp-2 w-[80px] flex-grow pt-2 text-center text-[12px] font-bold sm:w-[150px] sm:flex-grow-0 sm:text-[14px] md:mt-[10px] md:w-[180px] md:text-[16px]">
+        <div className="mt-2 line-clamp-2 w-[80px] flex-grow-0 pt-2 text-center text-[12px] font-bold sm:w-[150px] sm:text-[14px] md:mt-[10px] md:w-[180px] md:text-[16px]">
           {title}
         </div>
         <div className="mt-[10px] hidden flex-grow truncate text-center text-[10px] text-[#8c8c8c] sm:block sm:text-[12px] md:w-[200px] md:text-[14px]">

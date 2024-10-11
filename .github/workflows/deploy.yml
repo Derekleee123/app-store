@@ -53,12 +53,24 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           sed -i "s|<!--version-->|![Version](https://img.shields.io/badge/version-$VERSION-blue)|g" README.md
 
-          # 提取百分比數據
-          if [ -f coverage/badge-statements.svg ]; then
-            COVERAGE_PERCENTAGE=$(grep -oP 'Coverage:statements: \K[0-9.]+%' coverage/badge-statements.svg)
-            sed -i "s|<!--coverage-->|Test Coverage: $COVERAGE_PERCENTAGE|g" README.md
+          # 計算測試覆蓋率
+          if [ -f coverage/clover.xml ]; then
+            coveredstatements=$(xmllint --xpath "string(//metrics/@coveredstatements)" coverage/clover.xml)
+            statements=$(xmllint --xpath "string(//metrics/@statements)" coverage/clover.xml)
+            coverage_percent=$(echo "scale=2; $coveredstatements / $statements * 100" | bc)
+            BADGE="![Coverage](https://img.shields.io/badge/Coverage-$coverage_percent%25-brightgreen)"
+
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+              # macOS 系統
+              sed -i '' "s|!\[Coverage\].*|$BADGE|" README.md
+            else
+              # 其他 Linux 系統
+              sed -i "s|!\[Coverage\].*|$BADGE|" README.md
+            fi
+
+            echo "Coverage rate updated to $coverage_percent%"
           else
-            echo "Coverage badge not found!"  # 输出调试信息
+            echo "Coverage file not found!"  # 输出调试信息
           fi
 
       - name: Commit and push changes to README
